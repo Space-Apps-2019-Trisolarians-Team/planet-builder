@@ -10,4 +10,8 @@ public class Constants : MonoBehaviour
     public static float minPosition = -18f;
     public static float maxPosition = -2f;
     public static float initialPosition = -12f;
+    public static float dataMinSize;
+    public static float dataMaxSize;
+    public static float dataMinDistance;
+    public static float dataMaxDIstance;
 }

@@ -10,6 +10,7 @@ public class Planet : MonoBehaviour
     private float scaleFactor;
 
     private float size = .5f;
+    private float sizePosta = .5f;
     private float position = .5f;
 
     void Start()
@@ -29,7 +30,6 @@ public class Planet : MonoBehaviour
                     v3 = Camera.main.ScreenToWorldPoint(v3);
                     v3.x = Mathf.Clamp(v3.x, Constants.minPosition, Constants.maxPosition);
                     position = 1 - ((v3.x - Constants.minPosition) / (Constants.maxPosition - Constants.minPosition));
-                    Debug.Log(position);
                     break;
                 }
             case EditionModes.TILT:
@@ -45,7 +45,7 @@ public class Planet : MonoBehaviour
                     Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
                     float dist = Mathf.Max(Mathf.Abs(diff.x), Mathf.Abs(diff.y));
                     size = dist / (Constants.maxSize - Constants.minSize);
-                    Debug.Log(size);
+                    sizePosta = Mathf.Max(Mathf.Abs(diff.normalized.x), Mathf.Abs(diff.normalized.y)) / (Constants.maxSize - Constants.minSize);
                     break;
                 }
         }
@@ -57,6 +57,9 @@ public class Planet : MonoBehaviour
         float s = Mathf.Clamp((Constants.maxSize - Constants.minSize) * size, Constants.minSize, Constants.maxSize) * position + Constants.minSize;
         transform.localScale = new Vector3(s, s, transform.localScale.z);
         transform.position = new Vector3((Constants.maxPosition - Constants.minPosition) * (1 - position) + Constants.minPosition, transform.position.y, transform.position.z);
+
+        Debug.Log(string.Format("{0} {1} {2} {3}", Constants.dataMaxSize, Constants.dataMinSize, sizePosta, (Constants.dataMaxSize - Constants.dataMinSize) * size / 2.71f - Constants.dataMinSize));
+        //Debug.Log((Constants.dataMaxSize - Constants.dataMinSize) * size - Constants.dataMinSize);
     }
 
 }
