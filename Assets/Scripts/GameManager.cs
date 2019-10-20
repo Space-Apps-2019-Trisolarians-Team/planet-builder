@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System;
 using CI.HttpClient;
+using SimpleHTTP;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject startScreen;
-    public GameObject loadingScreen;
     public GameObject planetBuilder;
     public GameObject starScreen;
     public StarConfiguration starConfig;
@@ -23,7 +24,6 @@ public class GameManager : MonoBehaviour
     private void GetInitialValues() {
         client.Get(new Uri("http://67.207.90.121/stats/planets?fields=pl_rade,pl_ratdor,pl_masse"), HttpCompletionOption.AllResponseContent, (r) =>
         {
-            loadingScreen.SetActive(false);
             startScreen.SetActive(true);
             PlanetStatsResponse res = JsonUtility.FromJson<PlanetStatsResponse>(r.ReadAsString());
             Constants.dataMinSize = res.pl_rade.min;
@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
         });
         client.Get(new Uri("http://67.207.90.121/stats/stars"), HttpCompletionOption.AllResponseContent, (r) =>
         {
-            loadingScreen.SetActive(false);
             startScreen.SetActive(true);
             StarStatsResponse res = JsonUtility.FromJson<StarStatsResponse>(r.ReadAsString());
             starConfig.SetMinMaxValues(res);
@@ -52,6 +51,26 @@ public class GameManager : MonoBehaviour
             starView.SetActive(true);
         });
     }
+
+    /*public IEnumerator GetRandomStar()
+    {
+        client.Get(new Uri("http://67.207.90.121/random-star"), HttpCompletionOption.AllResponseContent, (r) =>
+        {
+            
+        });
+
+        Request request = new Request("http://67.207.90.121/random-star");
+        Client http = new Client();
+        yield return http.Send(request);
+        if (http.IsSuccessful())
+        {
+            Response resp = http.Response();
+            RandomStarResponse res = JsonUtility.FromJson<RandomStarResponse>(resp.Body());
+            starConfig.SetStarValues(res.st_age, res.st_mass, res.st_teff, res.st_lum, res.st_rad);
+            starScreen.SetActive(true);
+            starView.SetActive(true);
+        }
+    }*/
 
     public void GetSimilarPlanet(float radius, float distance)
     {
