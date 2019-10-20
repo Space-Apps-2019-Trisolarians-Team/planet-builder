@@ -36,5 +36,17 @@ public class PlanetStatsResponse
 {
     public Stats pl_rade;
     public Stats pl_ratdor;
-    public Stats st_rad;
+    public Stats pl_masse;
+}
+
+public class SimilarExoplanetResponse
+{
+    public float distance;
+    public float pl_distance;
+    public string pl_hostname;
+    public string pl_name;
+    public float pl_masse;
+    public float pl_rade;
+    public float st_rade;
+    public float pl_ratror;
 }
