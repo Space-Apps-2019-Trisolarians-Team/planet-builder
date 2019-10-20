@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GetInitialValues()
     {
-        Request request = new Request("http://67.207.90.121/stats/planets?fields=pl_rade,pl_ratdor,pl_masse");
+        Request request = new Request("http://67.207.90.121:3000/stats/planets?fields=pl_rade,pl_ratdor,pl_masse");
         Client http = new Client();
         yield return http.Send(request);
         if (http.IsSuccessful())
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             Constants.dataMaxMass = res.pl_masse.max;
         }
         
-        Request request2 = new Request("http://67.207.90.121/stats/stars");
+        Request request2 = new Request("http://67.207.90.121:3000/stats/stars");
         Client http2 = new Client();
         yield return http2.Send(request2);
         if (http2.IsSuccessful())
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GetRandomStar()
     {
-        Request request = new Request("http://67.207.90.121/random-star");
+        Request request = new Request("http://67.207.90.121:3000/random-star");
         Client http = new Client();
         yield return http.Send(request);
         if (http.IsSuccessful())
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GetSimilarPlanetRequest(float radius, float distance)
     {
-        Request request = new Request(string.Format("http://67.207.90.121/similar_exoplanet?pl_rade={0}&pl_distance={1}", radius, distance));
+        Request request = new Request(string.Format("http://67.207.90.121:3000/similar_exoplanet?pl_rade={0}&pl_distance={1}", radius, distance));
         Client http = new Client();
         yield return http.Send(request);
         if (http.IsSuccessful())
