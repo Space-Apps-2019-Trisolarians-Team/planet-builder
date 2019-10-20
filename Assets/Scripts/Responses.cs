@@ -21,6 +21,8 @@ public class Stats
     public float std;
     public float min;
     public float max;
+    public float max95;
+    public float min95;
 }
 
 public class StarStatsResponse
@@ -37,16 +39,19 @@ public class PlanetStatsResponse
     public Stats pl_rade;
     public Stats pl_ratdor;
     public Stats pl_masse;
+    public Stats pl_orbsmax;
 }
 
 public class SimilarExoplanetResponse
 {
     public float distance;
-    public float pl_distance;
+    public float pl_orbsmax;
     public string pl_hostname;
     public string pl_name;
     public float pl_masse;
     public float pl_rade;
-    public float st_rade;
+    public float st_rad;
     public float pl_ratror;
+    public string pl_pelink;
+    public bool in_hz;
 }

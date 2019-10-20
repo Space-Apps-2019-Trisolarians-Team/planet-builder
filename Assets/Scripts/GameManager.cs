@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GetInitialValues()
     {
-        Request request = new Request("http://67.207.90.121:3000/stats/planets?fields=pl_rade,pl_ratdor,pl_masse");
+        Request request = new Request("http://67.207.90.121:3000/stats/planets?fields=pl_rade,pl_ratdor,pl_orbsmax,pl_masse");
         Client http = new Client();
         yield return http.Send(request);
         if (http.IsSuccessful())
@@ -28,11 +28,11 @@ public class GameManager : MonoBehaviour
             startScreen.SetActive(true);
             PlanetStatsResponse res = JsonUtility.FromJson<PlanetStatsResponse>(resp.Body());
             Constants.dataMinSize = res.pl_rade.min;
-            Constants.dataMaxSize = res.pl_rade.max;
-            Constants.dataMinDistance = res.pl_ratdor.min;
-            Constants.dataMaxDIstance = res.pl_ratdor.max;
+            Constants.dataMaxSize = res.pl_rade.max95;
+            Constants.dataMinDistance = res.pl_orbsmax.min;
+            Constants.dataMaxDIstance = res.pl_orbsmax.max95;
             Constants.dataMinMass = res.pl_masse.min;
-            Constants.dataMaxMass = res.pl_masse.max;
+            Constants.dataMaxMass = res.pl_masse.max95;
         }
         
         Request request2 = new Request("http://67.207.90.121:3000/stats/stars");
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GetSimilarPlanetRequest(float radius, float distance)
     {
-        Request request = new Request(string.Format("http://67.207.90.121:3000/similar_exoplanet?pl_rade={0}&pl_distance={1}", radius, distance));
+        Request request = new Request(string.Format("http://67.207.90.121:3000/similar_exoplanet?pl_rade={0}&pl_orbsmax={1}", radius, distance));
         Client http = new Client();
         yield return http.Send(request);
         if (http.IsSuccessful())
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         planetBuilder.SetActive(false);
         similarPlanetView.SetActive(true);
-        similarController.SetInfo(res.pl_hostname, res.pl_name, res.st_rade, res.pl_distance, res.pl_rade, true);
+        similarController.SetInfo(res.pl_hostname, res.pl_name, res.st_rad, res.pl_orbsmax, res.pl_rade, res.in_hz, res.pl_pelink);
     }
 
     public void StartGame()
